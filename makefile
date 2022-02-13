@@ -5,10 +5,10 @@ up:
 
 .PHONY: down
 
-	down:
+down:
 			docker-compose down
 
 .PHONY: logs
 
-	logs:
+logs:
 			docker-compose logs -f
