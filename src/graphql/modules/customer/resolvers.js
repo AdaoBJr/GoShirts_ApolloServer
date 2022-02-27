@@ -8,7 +8,7 @@ export default {
     createCustomer: async (_parent, args, _context, _info) => {
       const { data } = args;
       customerdb.push(data);
-      return data;
+      return { customer: data };
     },
   },
 };
