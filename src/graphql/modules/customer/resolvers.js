@@ -1,14 +1,13 @@
-const customerdb = [];
+import Customer from '../../../repositories/mongodb/models/customer';
 
 export default {
   Query: {
-    customerList: async () => customerdb,
+    customerList: async () => await Customer.find(),
   },
   Mutation: {
-    createCustomer: async (_parent, args, _context, _info) => {
-      const { data } = args;
-      customerdb.push(data);
-      return { customer: data };
+    createCustomer: async (_, { data }) => {
+      const customer = await Customer.create(data);
+      return { customer };
     },
   },
 };
