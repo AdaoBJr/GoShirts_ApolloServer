@@ -3,6 +3,10 @@ input CustomerDataInput {
   email: String!
 }
 
+input CustomerIdInput {
+  id: ID!
+}
+
 input CustomerInput {
   email: String!
   firstName: String!
@@ -36,7 +40,8 @@ type CreatedCustomer {
 
 type Query {
   customerList: [Customer!]!
-  customer(data: CustomerDataInput): CreatedCustomer
+  customer(data: CustomerDataInput!): CreatedCustomer!
+  customerById(data: CustomerIdInput!): CreatedCustomer!
 }
 
 type Mutation {
