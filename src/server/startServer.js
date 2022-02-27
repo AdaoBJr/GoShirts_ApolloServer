@@ -1,5 +1,6 @@
-import { ApolloServer } from 'apollo-server';
 import 'dotenv/config';
+import { ApolloServer } from 'apollo-server';
+import '../repositories/mongodb/connection';
 
 export default function startSever({ typeDefs, resolvers }) {
   const { PORT } = process.env;
