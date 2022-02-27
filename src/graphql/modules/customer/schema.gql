@@ -18,6 +18,17 @@ input CustomerInput {
   gender: Int!
 }
 
+input CustomerUpdateInput {
+  email: String
+  firstName: String
+  lastName: String
+  telephone: String
+  cpf: String
+  password: String
+  date_of_birth: String
+  gender: Int
+}
+
 # RETURN
 
 type Customer {
@@ -41,9 +52,10 @@ type CreatedCustomer {
 type Query {
   customerList: [Customer!]!
   customer(data: CustomerDataInput!): CreatedCustomer!
-  customerById(data: CustomerIdInput!): CreatedCustomer!
+  customerById(hash: ID!): CreatedCustomer!
 }
 
 type Mutation {
   createCustomer(data: CustomerInput!): CreatedCustomer!
+  updateCustomerById(hash: ID!, data: CustomerUpdateInput!): CreatedCustomer!
 }
