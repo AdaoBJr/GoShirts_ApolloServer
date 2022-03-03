@@ -1,9 +1,10 @@
-import { useCustomer } from '../../../middlewares/talons/useCustomer';
+import { useCustomer } from '../../../helpers/talons/useCustomer';
 const {
   CustomerList,
   CustomerById,
   UpdateCustomerById,
   DeleteCustomerById,
+  SignInCustomer,
   CreateCustomer,
 } = useCustomer();
 
@@ -17,5 +18,6 @@ export default {
     updateCustomerById: async (_, { hash: id, data }) =>
       await UpdateCustomerById({ id, data }),
     deleteCustomerById: async (_, { hash: id }) => await DeleteCustomerById({ id }),
+    signInCustomer: async (_, { data }) => await SignInCustomer({ data }),
   },
 };
