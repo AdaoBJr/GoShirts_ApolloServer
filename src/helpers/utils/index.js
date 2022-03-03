@@ -1,2 +1,3 @@
 import generateToken from './generateToken';
-export { generateToken };
+import checkEmail from './checkEmail';
+export { generateToken, checkEmail };
