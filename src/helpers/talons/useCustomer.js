@@ -1,43 +1,54 @@
 import { hash, compare } from 'bcrypt';
 import { v4 as uuidV4 } from 'uuid';
-import Customer from '../../repositories/mongodb/models/customer';
+import CustomerRepository from '../../repositories/mongodb/models/customer';
 import { generateToken, checkEmail } from '../utils';
+import apiError from '../errors';
+import { userDoesNotExist, emailExists, emailOrPwdIncorrect } from '../errors';
 
 const useCustomer = () => {
-  const CustomerList = async () => await Customer.find();
+  const CustomerList = async () => await CustomerRepository.find();
 
   const CustomerById = async ({ id }) => ({
-    customer: await Customer.findOne({ id }).exec(),
+    customer: await CustomerRepository.findOne({ id }).exec(),
   });
 
-  const UpdateCustomerById = async ({ id, data }) => ({
-    customer: await Customer.findOneAndUpdate(id, data, { new: true }),
-  });
+  const UpdateCustomerById = async ({ id, data }) => {
+    const user = await CustomerRepository.findOne({ email: data.email }).exec();
+    if (!user) apiError(userDoesNotExist);
+    if (user) apiError(emailExists);
 
-  const DeleteCustomerById = async ({ id }) => ({
-    delete: !!(await Customer.findOneAndDelete(id)),
+    const passwordHash = await hash(data.password, 8);
+    data.password = passwordHash;
+
+    return {
+      customer: await CustomerRepository.findOneAndUpdate({ id }, data, { new: true }),
+    };
+  };
+
+  const DeleteCustomer = async ({ email }) => ({
+    delete: !!(await CustomerRepository.findOneAndDelete({ email })),
   });
 
   const SignInCustomer = async ({ data }) => {
     const { email, password } = data;
-    const user = await Customer.findOne({ email }).exec();
-    if (!user) throw new Error('E-mail or Password incorrect');
+    const user = await CustomerRepository.findOne({ email }).exec();
+    if (!user) apiError(emailOrPwdIncorrect);
 
     const passwordMatch = await compare(password, user.password);
-    if (!passwordMatch) throw new Error('E-mail or Password incorrect');
+    if (!passwordMatch) apiError(emailOrPwdIncorrect);
     return { token: generateToken({ id: user.id }) };
   };
 
   const CreateCustomer = async ({ data }) => {
     const user = await checkEmail({ email: data.email });
-    if (user) throw new Error('Email already registered');
+    if (user) apiError(emailExists);
 
     const id = uuidV4();
     const passwordHash = await hash(data.password, 8);
     data.password = passwordHash;
 
     const customerData = { id, ...data };
-    const customer = await Customer.create(customerData);
+    const customer = await CustomerRepository.create(customerData);
     return { customer };
   };
 
@@ -45,7 +56,7 @@ const useCustomer = () => {
     CustomerList,
     CustomerById,
     UpdateCustomerById,
-    DeleteCustomerById,
+    DeleteCustomer,
     SignInCustomer,
     CreateCustomer,
   };
