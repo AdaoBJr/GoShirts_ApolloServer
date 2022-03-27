@@ -3,7 +3,7 @@ const {
   CustomerList,
   CustomerById,
   UpdateCustomerById,
-  DeleteCustomerById,
+  DeleteCustomer,
   SignInCustomer,
   CreateCustomer,
 } = useCustomer();
@@ -17,7 +17,7 @@ export default {
     createCustomer: async (_, { data }) => await CreateCustomer({ data }),
     updateCustomerById: async (_, { hash: id, data }) =>
       await UpdateCustomerById({ id, data }),
-    deleteCustomerById: async (_, { hash: id }) => await DeleteCustomerById({ id }),
+    deleteCustomer: async (_, { email }) => await DeleteCustomer({ email }),
     signInCustomer: async (_, { data }) => await SignInCustomer({ data }),
   },
 };

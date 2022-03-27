@@ -71,6 +71,6 @@ type Query {
 type Mutation {
   createCustomer(data: CustomerInput!): CreatedCustomer!
   updateCustomerById(hash: ID!, data: CustomerUpdateInput!): CreatedCustomer!
-  deleteCustomerById(hash: ID!): DeletedCustomer!
+  deleteCustomer(email: String!): DeletedCustomer!
   signInCustomer(data: CustomerSignInInput!): TokenCustomer!
 }
