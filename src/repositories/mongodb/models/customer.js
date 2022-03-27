@@ -39,6 +39,5 @@ const Schema = new mongoose.Schema({
   },
 });
 
-const CustomerCollection = 'customers';
-const Customer = mongoose.model(CustomerCollection, Schema);
-export default Customer;
+const CustomerRepository = mongoose.model('customer', Schema, 'customers');
+export default CustomerRepository;
