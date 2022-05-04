@@ -1,8 +1,8 @@
 import { useCustomer } from '../../../helpers/talons/useCustomer';
 const {
   CustomerList,
-  CustomerById,
-  UpdateCustomerById,
+  CustomerInfo,
+  UpdateCustomer,
   DeleteCustomer,
   SignInCustomer,
   CreateCustomer,
@@ -11,12 +11,11 @@ const {
 export default {
   Query: {
     customerList: async () => await CustomerList(),
-    customerById: async (_, { hash: id }) => await CustomerById({ id }),
+    customerInfo: async (_, { hash: id }) => await CustomerInfo({ id }),
   },
   Mutation: {
     createCustomer: async (_, { data }) => await CreateCustomer({ data }),
-    updateCustomerById: async (_, { hash: id, data }) =>
-      await UpdateCustomerById({ id, data }),
+    updateCustomer: async (_, { hash: id, data }) => await UpdateCustomer({ id, data }),
     deleteCustomer: async (_, { email }) => await DeleteCustomer({ email }),
     signInCustomer: async (_, { data }) => await SignInCustomer({ data }),
   },
