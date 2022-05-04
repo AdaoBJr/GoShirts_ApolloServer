@@ -65,12 +65,12 @@ type TokenCustomer {
 type Query {
   customerList: [Customer!]!
   customer(data: CustomerDataInput!): CreatedCustomer!
-  customerById(hash: ID!): CreatedCustomer!
+  customerInfo(hash: ID!): CreatedCustomer!
 }
 
 type Mutation {
   createCustomer(data: CustomerInput!): CreatedCustomer!
-  updateCustomerById(hash: ID!, data: CustomerUpdateInput!): CreatedCustomer!
+  updateCustomer(hash: ID!, data: CustomerUpdateInput!): CreatedCustomer!
   deleteCustomer(email: String!): DeletedCustomer!
   signInCustomer(data: CustomerSignInInput!): TokenCustomer!
 }

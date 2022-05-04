@@ -8,11 +8,11 @@ import { userDoesNotExist, emailExists, emailOrPwdIncorrect } from '../errors';
 const useCustomer = () => {
   const CustomerList = async () => await CustomerRepository.find();
 
-  const CustomerById = async ({ id }) => ({
+  const CustomerInfo = async ({ id }) => ({
     customer: await CustomerRepository.findOne({ id }).exec(),
   });
 
-  const UpdateCustomerById = async ({ id, data }) => {
+  const UpdateCustomer = async ({ id, data }) => {
     const user = await CustomerRepository.findOne({ email: data.email }).exec();
     if (!user) apiError(userDoesNotExist);
     if (user) apiError(emailExists);
@@ -54,8 +54,8 @@ const useCustomer = () => {
 
   return {
     CustomerList,
-    CustomerById,
-    UpdateCustomerById,
+    CustomerInfo,
+    UpdateCustomer,
     DeleteCustomer,
     SignInCustomer,
     CreateCustomer,
