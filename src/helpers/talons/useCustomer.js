@@ -36,7 +36,7 @@ const useCustomer = () => {
 
     const passwordMatch = await compare(password, user.password);
     if (!passwordMatch) apiError(emailOrPwdIncorrect);
-    return { token: generateToken({ id: user.id }) };
+    return { token: generateToken({ userId: user.id }) };
   };
 
   const CreateCustomer = async ({ data }) => {
