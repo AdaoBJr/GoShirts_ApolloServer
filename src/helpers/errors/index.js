@@ -1,2 +1,2 @@
-export { default } from './apiError';
-export { emailExists, userDoesNotExist, emailOrPwdIncorrect } from './msgError';
+export * from './apiError';
+export * from './msgError';
